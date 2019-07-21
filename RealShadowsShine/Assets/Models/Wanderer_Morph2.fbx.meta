@@ -1,0 +1,237 @@
+fileFormatVersion: 2
+guid: 68851d0bc8a974a2d920607972d35681
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: boy
+    100002: boy_10
+    100004: boy_11
+    100006: boy_12
+    100008: boy_13
+    100010: boy_14
+    100012: boy_15
+    100014: boy_16
+    100016: boy_2
+    100018: boy_3
+    100020: boy_4
+    100022: boy_5
+    100024: boy_6
+    100026: boy_7
+    100028: boy_8
+    100030: boy_9
+    100032: CINEMA_4D_Editor
+    100034: guy_base
+    100036: guy_bend
+    100038: guy_bend_half
+    100040: guy_Jiggle1
+    100042: guy_Jiggle2
+    100044: guy_Jiggle3
+    100046: guy_Jiggle4
+    100048: guy_melt
+    100050: Null
+    100052: robe
+    100054: robe_10
+    100056: robe_11
+    100058: robe_12
+    100060: robe_13
+    100062: robe_14
+    100064: robe_15
+    100066: robe_16
+    100068: robe_2
+    100070: robe_3
+    100072: robe_4
+    100074: robe_5
+    100076: robe_6
+    100078: robe_7
+    100080: robe_8
+    100082: robe_9
+    100084: //RootNode
+    400000: boy
+    400002: boy_10
+    400004: boy_11
+    400006: boy_12
+    400008: boy_13
+    400010: boy_14
+    400012: boy_15
+    400014: boy_16
+    400016: boy_2
+    400018: boy_3
+    400020: boy_4
+    400022: boy_5
+    400024: boy_6
+    400026: boy_7
+    400028: boy_8
+    400030: boy_9
+    400032: CINEMA_4D_Editor
+    400034: guy_base
+    400036: guy_bend
+    400038: guy_bend_half
+    400040: guy_Jiggle1
+    400042: guy_Jiggle2
+    400044: guy_Jiggle3
+    400046: guy_Jiggle4
+    400048: guy_melt
+    400050: Null
+    400052: robe
+    400054: robe_10
+    400056: robe_11
+    400058: robe_12
+    400060: robe_13
+    400062: robe_14
+    400064: robe_15
+    400066: robe_16
+    400068: robe_2
+    400070: robe_3
+    400072: robe_4
+    400074: robe_5
+    400076: robe_6
+    400078: robe_7
+    400080: robe_8
+    400082: robe_9
+    400084: //RootNode
+    2000000: CINEMA_4D_Editor
+    2100000: Mat.1
+    2100002: Mat
+    2300000: boy_10
+    2300002: boy_12
+    2300004: boy_14
+    2300006: boy_2
+    2300008: boy_4
+    2300010: boy_6
+    2300012: boy_8
+    2300014: robe_10
+    2300016: robe_12
+    2300018: robe_14
+    2300020: robe_2
+    2300022: robe_4
+    2300024: robe_6
+    2300026: robe_8
+    3300000: boy_10
+    3300002: boy_12
+    3300004: boy_14
+    3300006: boy_2
+    3300008: boy_4
+    3300010: boy_6
+    3300012: boy_8
+    3300014: robe_10
+    3300016: robe_12
+    3300018: robe_14
+    3300020: robe_2
+    3300022: robe_4
+    3300024: robe_6
+    3300026: robe_8
+    4300000: boy_2
+    4300002: robe_2
+    4300004: boy_4
+    4300006: robe_4
+    4300008: boy_6
+    4300010: robe_6
+    4300012: boy_8
+    4300014: robe_8
+    4300016: boy_10
+    4300018: robe_10
+    4300020: boy_12
+    4300022: robe_12
+    4300024: boy_14
+    4300026: robe_14
+    4300028: boy_16
+    4300030: robe_16
+    9500000: //RootNode
+    13700000: boy_16
+    13700002: robe_16
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat
+    second: {fileID: 2100000, guid: 1880af8e0c965494eb868a9fa48fec51, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.1
+    second: {fileID: 2100000, guid: aa580c0da01a64baa9179d33b9b29981, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

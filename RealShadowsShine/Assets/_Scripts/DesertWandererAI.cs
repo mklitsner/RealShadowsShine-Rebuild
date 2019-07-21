@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DesertWandererAI: MonoBehaviour {
-	bool inshade;
+public class DesertWandererAI: MonoBehaviour { 
 	[Range(0, 1)]public float heat;//0-1
 	[Range(0, 1)]public float tiredness;//0-1
+
 
 	public GameObject footprint;
 	public GameObject self;
@@ -21,14 +21,18 @@ public class DesertWandererAI: MonoBehaviour {
 	float rotationSpeed;
 	public float currentrotationSpeed;
 
-	//path follow
+    [SerializeField] BlendShapeBehavior blendShapeBehavior;
+    [SerializeField] DetectShade detectShade;
+    [SerializeField] Wanderer_Audio audioControl;
+
+    //path follow
 
 
-	//
+    //
 
 
-
-	void Start () {
+  
+    void Start () {
 		currentspeed = 1;
 		StartCoroutine (FootPrintTiming (5));
 		state = resting;
@@ -57,7 +61,7 @@ public class DesertWandererAI: MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		bool inshade = GetComponent<DetectShade> ().inshade;
+		bool inshade = detectShade.inshade;
 
 		//WHAT HAPPENS IF NOT IN THE SHADE
 
@@ -98,12 +102,16 @@ public class DesertWandererAI: MonoBehaviour {
 			}
 		}
 
-	
 
-		SetHeat (0.005f,0.01f,inshade);
+       
+
+        SetHeat (0.005f,0.01f,inshade);
 		SetTiredness (0.01f, 0.02f,inshade);
 
-	}
+        audioControl.UpdateAudio(inshade, heat);
+        blendShapeBehavior.UpdateBlendShape(inshade, heat, audioControl.shadedControl);
+       
+    }
 
 	void SetSpeed(float _multiplier){
 		currentspeed = speed * _multiplier;

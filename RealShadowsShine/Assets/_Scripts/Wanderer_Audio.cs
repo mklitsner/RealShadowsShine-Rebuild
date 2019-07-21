@@ -16,20 +16,12 @@ public class Wanderer_Audio : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void UpdateAudio (bool inshade, float heat) {
 		float heatVol;
 
 
 		float inshadeVol;
 		float inshadePitch;
-
-
-		bool inshade = GetComponent<DetectShade> ().inshade;
-		float heat = GetComponent<DesertWandererAI>().heat;
-
-
-
-
 
 		if (inshade) {
 			if (shadedControl <= 1) {

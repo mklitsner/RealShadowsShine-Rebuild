@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BlendShapeBehavior : MonoBehaviour {
-	SkinnedMeshRenderer skinnedMeshRenderer;
-	Mesh skinnedMesh;
-	int blendShapeCount;
-	public float blendOne = 0f;
+    [SerializeField] SkinnedMeshBlend[] skinnedMeshBlend;
+    [SerializeField] DarkenWithHeat[] colorControl;
+	public float bendHalfBlend1;
+    public float bendBlend2;
+    public float meltBlend7;
 	public float blendSpeed=1;
 	public float wrinkleSpeed=10;
 	public float wrinkleIntensity;
@@ -14,48 +13,63 @@ public class BlendShapeBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
-		skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
-		blendShapeCount = skinnedMesh.blendShapeCount; 
+
+
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		bool inshade = transform.parent.GetComponent<DetectShade> ().inshade;
-		float heat = transform.parent.GetComponent<DesertWandererAI> ().heat;
-		float shadedControl= transform.parent.GetComponent<Wanderer_Audio> ().shadedControl;
-		float blendheat=Mathf.Lerp (100, 0, heat);
+public void UpdateBlendShape (bool inshade, float heat, float shadedControl)
+    {
+
+
+
+        float heatBlend=Mathf.Lerp (0,100, heat);
 	
 
-		blendOne = Mathf.Lerp (blendOne, blendheat, Time.deltaTime*blendSpeed);
-			
-		float blendTwo=0;
-		float blendThree=0;
-		float blendFour=0;
-		float blendFive=0;
-		float blendTwoTemp = blendTwo;;
-		float blendThreeTemp = blendThree;
+		bendHalfBlend1 = Mathf.Lerp (bendHalfBlend1, heatBlend, Time.deltaTime*blendSpeed);
+
+        float[] wrinkleBlend= new float[4];
+        float[] wrinkleBlendTemp = new float[2]; ;
+		
+        wrinkleBlendTemp[0] = wrinkleBlend[0];
+        wrinkleBlendTemp[1] = wrinkleBlend[1];
 
 
 
 		if (inshade) {
-			blendTwo = Mathf.Lerp (0, wrinkleIntensity, Mathf.Cos (Time.time * wrinkleSpeed));
-			blendThree = Mathf.Lerp (0, wrinkleIntensity, -Mathf.Cos(Time.time * wrinkleSpeed*1.3f));
-			blendFour = Mathf.Lerp (0, wrinkleIntensity, Mathf.Cos (Time.time * wrinkleSpeed*0.7f));
-			blendFive = Mathf.Lerp (0, wrinkleIntensity, -Mathf.Cos(Time.time * wrinkleSpeed*1.3f));
-			blendTwoTemp = blendTwo;
-			blendThreeTemp = blendThree;
-		} else {
-			blendTwo = Mathf.Lerp (blendTwoTemp, 0, shadedControl);
-			blendThree = Mathf.Lerp (blendThreeTemp, 0, shadedControl);
+            wrinkleBlend[0] = Mathf.Lerp (0, wrinkleIntensity, Mathf.Cos (Time.time * wrinkleSpeed));
+            wrinkleBlend[1] = Mathf.Lerp (0, wrinkleIntensity, -Mathf.Cos(Time.time * wrinkleSpeed*1.3f));
+            wrinkleBlend[2] = Mathf.Lerp (0, wrinkleIntensity, Mathf.Cos (Time.time * wrinkleSpeed*0.7f));
+            wrinkleBlend[3] = Mathf.Lerp (0, wrinkleIntensity, -Mathf.Cos(Time.time * wrinkleSpeed*1.3f));
+            wrinkleBlendTemp[0] = wrinkleBlend[0];
+            wrinkleBlendTemp[1] = wrinkleBlend[1];
+
+        }
+        else {
+            wrinkleBlend[0] = Mathf.Lerp (wrinkleBlendTemp[0], 0, shadedControl);
+            wrinkleBlend[1] = Mathf.Lerp (wrinkleBlendTemp[1], 0, shadedControl);
 
 		}
 
-		skinnedMeshRenderer.SetBlendShapeWeight (0, blendOne);
-		skinnedMeshRenderer.SetBlendShapeWeight (1, blendTwo);
-		skinnedMeshRenderer.SetBlendShapeWeight (2, blendThree);
-		skinnedMeshRenderer.SetBlendShapeWeight (3, blendFour);
-		skinnedMeshRenderer.SetBlendShapeWeight (4, blendFive);
+        for (int i = 0; i < skinnedMeshBlend.Length; i++)
+        {
 
-	}
+
+            skinnedMeshBlend[i].setBlend(skinnedMeshBlend[i].bendHalf, bendHalfBlend1);
+            skinnedMeshBlend[i].setBlend(skinnedMeshBlend[i].bend, bendBlend2);
+
+            for (int z = 0; z < skinnedMeshBlend[i].wrinkle.Length; z++)
+            {
+                skinnedMeshBlend[i].setBlend(skinnedMeshBlend[i].wrinkle[z], wrinkleBlend[z]);
+            }
+        }
+
+        for (int i = 0; i < colorControl.Length; i++)
+        {
+            colorControl[i].SetHeat(heat);
+        }
+    }
 }
+
+
+
