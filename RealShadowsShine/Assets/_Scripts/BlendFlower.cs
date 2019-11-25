@@ -3,36 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlendFlower : MonoBehaviour {
-	SkinnedMeshRenderer skinnedMeshRenderer;
-	Mesh skinnedMesh;
+	[SerializeField]SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] DetectShade _detectShade;
+    [SerializeField]
+
+    public BloomType bloomType;
+
+    public enum BloomType
+    {
+        Shade,Growth
+    }
+
+    public BudState budState= BudState.Closed;
+
+    public enum BudState
+    {
+        Closed,Blooming,Bloomed
+    }
+
+    Mesh skinnedMesh;
 	int blendShapeCount;
 	public int blendShapeSelected;
-	[HideInInspector]
-	public bool blooming;
+
+	bool blooming;
 	[HideInInspector]
 	public bool playSound;
 	public bool bloomed;
 	public float rise;
 	public float time;
 	float blend;
-	bool start;
 	public float Sound_delay=50;
 
 	// Use this for initialization
 	void Start () {
 
-
-
-
-	
-		skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer> ();
-		skinnedMesh = GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+		skinnedMesh = _skinnedMeshRenderer.sharedMesh;
 		blendShapeCount = skinnedMesh.blendShapeCount;
 
-		if (rise != 0) {
-			transform.Translate (0, -rise, 0);
-		}
-		skinnedMeshRenderer.SetBlendShapeWeight (blendShapeSelected, 0);
+        transform.Translate (0, -rise, 0);
+		
+		_skinnedMeshRenderer.SetBlendShapeWeight (blendShapeSelected, 0);
 
 
 
@@ -41,11 +51,13 @@ public class BlendFlower : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        /*
 		if (transform.GetComponent<BlendFlowerChild> () != null) {
+
+            Debug.LogError("BlendFlowerChild");
 			if (!blooming) {
 				if (transform.parent.GetComponent<GrowInshade> () != null) {
-					if (transform.parent.GetComponent<GrowInshade> ().i>0.9f) {
+					if (transform.parent.GetComponent<GrowInshade> ().scaleIndex>0.9f) {
 						StartCoroutine (Bloom (100, time));
 					}
 				} 
@@ -57,42 +69,53 @@ public class BlendFlower : MonoBehaviour {
 			}
 			
 			} else {
-				bool inshade = GetComponentInChildren<DetectShade> ().inshade;
-			if (inshade & !blooming) {
-					//start blooming until fully bloomed
-				//play audio clip
+			*/           
 
-					StartCoroutine (Bloom (100, time));	
-				}
-
+            switch (bloomType)
+            {
+                case BloomType.Shade:
+                    if (_detectShade.inshade)
+                    {
+                        StartBloom();
+                    }
+                    break;
+                case BloomType.Growth:
+                    //wait for command from growth
+                    break;
+                default:
+                    break;
+            }
 				
-			}
+			
 
-		if (skinnedMeshRenderer.GetBlendShapeWeight(blendShapeSelected) > Sound_delay) {
+		if (_skinnedMeshRenderer.GetBlendShapeWeight(blendShapeSelected) > Sound_delay) {
 			playSound = true;
 			Debug.Log ("played sound");
 		}
-
-
 	}
 
 
 
-	IEnumerator Bloom(float bValue,float bTime)
+    public void StartBloom()
+    {
+        if (budState.Equals(BudState.Closed))
+        {
+            StartCoroutine(Bloom(100, time));
+        }
+
+    }
+
+    IEnumerator Bloom(float bValue,float bTime)
 	{
-		
-		for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / bTime)
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / bTime)
 		{
-			
 			transform.Translate (0, rise / bTime*Time.deltaTime,0);
-			skinnedMeshRenderer.SetBlendShapeWeight (blendShapeSelected,Mathf.Lerp(blend,bValue,t));
-			yield return blooming=true;
-
-		
+			_skinnedMeshRenderer.SetBlendShapeWeight (blendShapeSelected,Mathf.Lerp(blend,bValue,t));
+			yield return budState=BudState.Blooming;
 		}
-		yield return bloomed=true;
+		yield return budState= BudState.Bloomed;
 
 
-	}
+    }
 		
 }

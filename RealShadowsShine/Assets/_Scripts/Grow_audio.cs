@@ -20,7 +20,7 @@ public class Grow_audio : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		bool inshade = GetComponent<GrowInshade> ().inshade;
-		float i = GetComponent<GrowInshade> ().i;
+		float i = GetComponent<GrowInshade> ().scaleIndex;
 		if (inshade && i < 1) {
 			audiosource.enabled = true;
 			audiosource.UnPause ();

@@ -17,7 +17,7 @@ public class Activate_with_Tree : MonoBehaviour {
 	void Update () {
 		if (Tree == null) {
 		} else {
-			float i = Tree.transform.GetComponent<GrowInshade> ().i;
+			float i = Tree.transform.GetComponent<GrowInshade> ().scaleIndex;
 			if (i > limmit) {
 				activate = true;
 			}

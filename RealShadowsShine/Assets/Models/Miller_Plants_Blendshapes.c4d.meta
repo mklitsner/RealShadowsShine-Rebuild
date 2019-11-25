@@ -1,25 +1,87 @@
 fileFormatVersion: 2
-guid: fad53414a70b6452a8ac78a66062ee4e
+guid: 99a2cd678cc4b40b7832a2d8530fce17
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: CINEMA_4D_Editor
-    100002: //RootNode
-    100004: roots
-    100006: stem
-    400000: CINEMA_4D_Editor
-    400002: //RootNode
-    400004: roots
-    400006: stem
+    100000: bulb
+    100002: bulb_clover
+    100004: bulb_cross
+    100006: bulb_open_1
+    100008: bulb_open_2
+    100010: bulb_open_3
+    100012: bulb_open_large
+    100014: bulb_skinny
+    100016: CINEMA_4D_Editor
+    100018: //RootNode
+    100020: Poses__bulb
+    100022: roots
+    100024: seed
+    100026: seedcase1
+    100028: seedcase2
+    100030: stem
+    400000: bulb
+    400002: bulb_clover
+    400004: bulb_cross
+    400006: bulb_open_1
+    400008: bulb_open_2
+    400010: bulb_open_3
+    400012: bulb_open_large
+    400014: bulb_skinny
+    400016: CINEMA_4D_Editor
+    400018: //RootNode
+    400020: Poses__bulb
+    400022: roots
+    400024: seed
+    400026: seedcase1
+    400028: seedcase2
+    400030: stem
     2000000: CINEMA_4D_Editor
     2100000: stalk_vines_case_pollen_mat
     2100002: stalk_vines_case_pollen_mat.1
-    2300000: roots
-    2300002: stem
-    3300000: roots
-    3300002: stem
-    4300000: roots
-    4300002: stem
+    2100004: stalk_vines_case_pollen_mat.2
+    2100006: stalk_vines_case_pollen_mat.3
+    2100008: stalk_vines_case_pollen_mat.4
+    2100010: petals_mat
+    2100012: No Name
+    2300000: bulb_clover
+    2300002: bulb_cross
+    2300004: bulb_open_1
+    2300006: bulb_open_2
+    2300008: bulb_open_3
+    2300010: bulb_open_large
+    2300012: bulb_skinny
+    2300014: roots
+    2300016: seed
+    2300018: seedcase1
+    2300020: seedcase2
+    2300022: stem
+    3300000: bulb_clover
+    3300002: bulb_cross
+    3300004: bulb_open_1
+    3300006: bulb_open_2
+    3300008: bulb_open_3
+    3300010: bulb_open_large
+    3300012: bulb_skinny
+    3300014: roots
+    3300016: seed
+    3300018: seedcase1
+    3300020: seedcase2
+    3300022: stem
+    4300000: seedcase2
+    4300002: seedcase1
+    4300004: roots
+    4300006: stem
+    4300008: seed
+    4300010: bulb
+    4300012: bulb_clover
+    4300014: bulb_cross
+    4300016: bulb_skinny
+    4300018: bulb_open_large
+    4300020: bulb_open_3
+    4300022: bulb_open_2
+    4300024: bulb_open_1
+    9500000: //RootNode
+    13700000: bulb
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -73,7 +135,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -100,7 +162,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
