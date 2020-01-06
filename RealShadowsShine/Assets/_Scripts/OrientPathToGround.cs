@@ -15,11 +15,11 @@ public class OrientPathToGround : MonoBehaviour {
 			Vector3 position = path_objs [i].position;
 			if(i>=0){
 				Ray ray = new Ray (path_objs [i].transform.position, orientaton*transform.up);
-				Debug.Log ("ray" + ray);
+//				Debug.Log ("ray" + ray);
 				RaycastHit hit;
 				if (Physics.SphereCast (ray, 0.1f, out hit)) 
 				{
-					Debug.Log ("hit at" + hit.point);
+//					Debug.Log ("hit at" + hit.point);
 					path_objs [i].transform.position = new Vector3 (position.x, hit.point.y+offset, position.z);
 			}
 		}

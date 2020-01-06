@@ -18,7 +18,7 @@ public class RotateOSC : MonoBehaviour {
 			offset = transform.eulerAngles.y;
 		} else {
 			float angle = Mathf.LerpAngle (transform.eulerAngles.y, osc.eulerAngles.y+offset, speed);
-			Debug.Log ("osc angle " + angle);
+//			Debug.Log ("osc angle " + angle);
 			transform.eulerAngles = new Vector3 (transform.eulerAngles.x, angle, transform.eulerAngles.z);
 		}
 	}

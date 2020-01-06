@@ -179,7 +179,7 @@ public class DesertWandererAI: MonoBehaviour {
 			GameObject footprintclone = (GameObject)Instantiate (footprint, footprintposition, Quaternion.Euler (180 + footprintSide * 90, transform.localEulerAngles.y, 90 + 90 * footprintSide));
 			footprintclone.GetComponent<FootprintScript> ().footprintSide = footprintSide;
 			float timing = _duration / (currentspeed+4);
-			Debug.Log (timing);
+//			Debug.Log (timing);
 			yield return new WaitForSeconds (timing);
 
 		}
