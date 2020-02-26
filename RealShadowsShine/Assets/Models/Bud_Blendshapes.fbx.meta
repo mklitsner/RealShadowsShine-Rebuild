@@ -70,7 +70,32 @@ ModelImporter:
     4300020: bulb_open_1
     9500000: //RootNode
     13700000: bulb
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 058c4d570da9c4706b7adf60182952b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: petals_mat
+    second: {fileID: 2100000, guid: c5cfd89466f43408cba25fdbe2373e84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stalk_vines_case_pollen_mat
+    second: {fileID: 2100000, guid: ea83e41a8a79d4ffbb00a34565853698, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stalk_vines_case_pollen_mat.1
+    second: {fileID: 2100000, guid: cb2e6522bfea64db39048edf842ca911, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stalk_vines_case_pollen_mat.2
+    second: {fileID: 2100000, guid: 55780edad389449f180bf66aa09f6d84, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

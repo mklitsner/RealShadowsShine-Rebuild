@@ -6,6 +6,7 @@ public class Pathfollowshadows : MonoBehaviour {
 	//path follow
 
 	public EditorPathScript PathToFollow;
+    [SerializeField] Animator animator;
 	public bool StartAtCurrentWaypoint;
 	public int CurrentWayPointID = 0;
 	private float reachDistance = 1.0f;
@@ -19,24 +20,26 @@ public class Pathfollowshadows : MonoBehaviour {
 
 	public int FinalWaypoint;
 
-	Vector3 last_position;
+    Activate_with_Tree activate_with_Tree;
+    DetectShade detectShade;
+    Vector3 last_position;
 	Vector3 current_position;
-	//
-	// Use this for initialization
-
 
 	float timeToStartMovingAgain = float.NegativeInfinity;
+
 	public enum ShadeWaitState {
 		Moving,
 		WaitingToLoseShade,
+        LostShade,
 		Dormant
 	}
 
 	public ShadeWaitState state = ShadeWaitState.Moving;
 
 	public bool shouldMove;
+    private float wait = 1;
 
-	void Start () {
+    void Start () {
 		
 		if (StartAtCurrentWaypoint) {
 			transform.position = PathToFollow.path_objs [CurrentWayPointID].position;
@@ -46,69 +49,107 @@ public class Pathfollowshadows : MonoBehaviour {
 		if (GetComponent<Activate_with_Tree> ().activate==false) {
 			state = ShadeWaitState.Dormant;
 		}
-	}
+
+        activate_with_Tree = GetComponent<Activate_with_Tree>();
+        detectShade = GetComponentInChildren<DetectShade>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		bool inshade = GetComponentInChildren<DetectShade> ().inshade;
-
+        
+        bool inshade = detectShade.inshade;
 
 		float distance = Vector3.Distance(PathToFollow.path_objs[CurrentWayPointID].position, transform.position);
 
+        switch (state)
+        {
+            case ShadeWaitState.Moving:
+                StopAnimation = false;
+                transform.position = Vector3.MoveTowards(transform.position, PathToFollow.path_objs[CurrentWayPointID].position, Time.deltaTime * currentspeed);
+                var rotation = Quaternion.LookRotation(PathToFollow.path_objs[CurrentWayPointID].position - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
+                CheckForNextTargetOnPath(distance);
+              
+                if (inshade)
+                {
+                    StopAnimation = true;
+                    state = ShadeWaitState.WaitingToLoseShade;
+                    
+                }
+
+                
+
+                break;
+            case ShadeWaitState.WaitingToLoseShade:
+                if (!inshade)
+                {
+                    timeToStartMovingAgain = Time.time + wait;
+                    state = ShadeWaitState.LostShade;
+                }
+
+                break;
+            case ShadeWaitState.Dormant:
+
+                if (activate_with_Tree.activate)
+                {
+                    state = ShadeWaitState.Moving;
+                }
+                break;
+            case ShadeWaitState.LostShade:
+                if (Time.time > timeToStartMovingAgain)
+                {
+                    if (inshade)
+                    {
+                        state = ShadeWaitState.WaitingToLoseShade;
+                    }
+                    else
+                    {
+                        state = ShadeWaitState.Moving;
+                    }
+                   
+                }
+                break;
+            default:
+                break;
 
 
-		if (state == ShadeWaitState.Dormant) {
-			if (GetComponent<Activate_with_Tree> ().activate) {
-				state = ShadeWaitState.Moving;
-			}
-		} else {
-			
-		
-			shouldMove = 
-			//!inshade; //original
-			state == ShadeWaitState.Moving;
-
-			if (shouldMove) {
-				transform.position = Vector3.MoveTowards (transform.position, PathToFollow.path_objs [CurrentWayPointID].position, Time.deltaTime * currentspeed);
-			}
+        }
+    }
 
 
+    private void CheckForNextTargetOnPath(float distance)
+    {
+        if (distance <= reachDistance)
+        {
+            CurrentWayPointID++;
+
+        }
+
+        if (CurrentWayPointID >= PathToFollow.path_objs.Count)
+        {
+            if (FinalWaypoint == -1)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            else
+            {
+                CurrentWayPointID = FinalWaypoint;
+            }
+        }
+    }
+
+    bool StopAnimation
+    {
+        get
+        {
+            return animator.GetBool("stop");
+        }
+        set
+        {
+            animator.SetBool("stop",value);
+        }
+    }
 
 
-			var rotation = Quaternion.LookRotation (PathToFollow.path_objs [CurrentWayPointID].position - transform.position);
-			transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-
-
-			if (distance <= reachDistance) {
-				CurrentWayPointID++;
-
-			}
-
-			if (CurrentWayPointID >= PathToFollow.path_objs.Count) {
-				if (FinalWaypoint == -1) {
-					Destroy (transform.parent.gameObject);
-				} else {
-					CurrentWayPointID = FinalWaypoint;
-				}
-			}
-
-
-
-
-			if (inshade) { //&& !inShadeAtLastCheck) { //instant enter shade
-
-				state = ShadeWaitState.WaitingToLoseShade;
-				timeToStartMovingAgain = Time.time + 1;
-		
-			} 
-
-			if (Time.time > timeToStartMovingAgain) {
-				state = ShadeWaitState.Moving;
-			}
-
-
-
-			inShadeAtLastCheck = inshade;
-		}
-	}
 }

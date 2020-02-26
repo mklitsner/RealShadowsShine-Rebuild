@@ -12,6 +12,7 @@ public class FootprintScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lifeleft = lifespan;
+       
 	}
 	
 	// Update is called once per frame

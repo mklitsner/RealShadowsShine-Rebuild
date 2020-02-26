@@ -18,7 +18,7 @@ public class BlendShapeBehavior : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-public void UpdateBlendShape (bool inshade, float heat, float shadedControl)
+public void UpdateBlendShape (bool inshade, float heat, float shadedControl, float shadeTimer)
     {
 
 
@@ -66,7 +66,7 @@ public void UpdateBlendShape (bool inshade, float heat, float shadedControl)
 
         for (int i = 0; i < colorControl.Length; i++)
         {
-            colorControl[i].SetHeat(heat);
+            colorControl[i].SetShadeColor(shadeTimer);
         }
     }
 }

@@ -12,11 +12,12 @@ public class DarkenWithHeat : MonoBehaviour {
 
 	
 	// Update is called once per frame
-	public void SetHeat (float heat) {
+	public void SetShadeColor (float shadedColorTimer) {
 		transform.GetComponent<SkinnedMeshRenderer> ().material.color=currentColor;
 		
 
-		currentColor = Color.Lerp (startColor, ScorchedColor, heat);
+		currentColor = Color.Lerp (startColor, ScorchedColor, shadedColorTimer);
 		
 	}
+  
 }

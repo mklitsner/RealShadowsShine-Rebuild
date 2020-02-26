@@ -5,9 +5,10 @@ using UnityEngine;
 public class DesertWandererAI: MonoBehaviour { 
 	[Range(0, 1)]public float heat;//0-1
 	[Range(0, 1)]public float tiredness;//0-1
+    [Range(0, 1)] public float shadedColorTimer;//0-1
+    float shadedColorSpeed=0.1f;
 
-
-	public GameObject footprint;
+    public GameObject footprint;
 	public GameObject self;
 	int footprintSide=1;
 
@@ -19,26 +20,31 @@ public class DesertWandererAI: MonoBehaviour {
 	public float currentspeed;
 
 	float rotationSpeed;
-	public float currentrotationSpeed;
+    private GameObject footprintHolder;
+    public float currentrotationSpeed;
 
     [SerializeField] BlendShapeBehavior blendShapeBehavior;
     [SerializeField] DetectShade detectShade;
     [SerializeField] Wanderer_Audio audioControl;
+    [SerializeField] HeatwaveAnimationBehavior heatwave;
 
     //path follow
 
 
     //
 
+    private void Awake()
+    {
+        footprintHolder = new GameObject("Footprints");
+    }
 
-  
     void Start () {
 		currentspeed = 1;
 		StartCoroutine (FootPrintTiming (5));
 		state = resting;
 		rotationSpeed=1;
-
-		SetState (wandering);
+        
+        SetState (wandering);
 		footprintSide = 1;
 		//StartCoroutine (FootPrintTiming (1));
 
@@ -72,7 +78,13 @@ public class DesertWandererAI: MonoBehaviour {
 
 
 			if (!inshade) {
-				if (heat > 0.2f) {
+
+                if (shadedColorTimer < 1)
+                {
+                    shadedColorTimer += shadedColorSpeed;
+                }
+
+                if (heat > 0.2f) {
 					//if heated
 					SetSpeed (0.2f / heat);
 					MoveForward (currentspeed);
@@ -87,9 +99,13 @@ public class DesertWandererAI: MonoBehaviour {
 		else if (inshade) {
 				SetSpeed (1);
 				MoveForward (currentspeed);
-			
 
-			}
+                if (shadedColorTimer > 0)
+                {
+                    shadedColorTimer -= shadedColorSpeed;
+                }
+
+            }
 			if (tiredness >= 1) {
 				SetState (resting);
 			}
@@ -109,8 +125,8 @@ public class DesertWandererAI: MonoBehaviour {
 		SetTiredness (0.01f, 0.02f,inshade);
 
         audioControl.UpdateAudio(inshade, heat);
-        blendShapeBehavior.UpdateBlendShape(inshade, heat, audioControl.shadedControl);
-       
+        blendShapeBehavior.UpdateBlendShape(inshade, heat, audioControl.shadedControl,shadedColorTimer);
+        heatwave.AnimateHeatWave(heat);
     }
 
 	void SetSpeed(float _multiplier){
@@ -176,8 +192,9 @@ public class DesertWandererAI: MonoBehaviour {
 			
 			footprintSide = -1 * footprintSide;
 			Vector3 footprintposition = new Vector3 (transform.localPosition.x + 0.05f * footprintSide, transform.localPosition.y - 0.5f, transform.localPosition.z);
-			GameObject footprintclone = (GameObject)Instantiate (footprint, footprintposition, Quaternion.Euler (180 + footprintSide * 90, transform.localEulerAngles.y, 90 + 90 * footprintSide));
+			GameObject footprintclone = Instantiate (footprint, footprintposition, Quaternion.Euler (180 + footprintSide * 90, transform.localEulerAngles.y, 90 + 90 * footprintSide),footprintHolder.transform);
 			footprintclone.GetComponent<FootprintScript> ().footprintSide = footprintSide;
+
 			float timing = _duration / (currentspeed+4);
 //			Debug.Log (timing);
 			yield return new WaitForSeconds (timing);

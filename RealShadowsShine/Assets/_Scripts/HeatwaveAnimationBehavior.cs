@@ -24,16 +24,7 @@ public class HeatwaveAnimationBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		heat = transform.parent.transform.parent.GetComponent<DesertWandererAI> ().heat;
-
-
-		if (heat < 0.5) {
-			transform.localScale = Vector3.Lerp (MinScale, MaxScale, heat);
-			anim.speed = 0.2f;
-		}else{
-			//animate it moving faster
-			anim.speed = (heat/0.5f)*(heat/0.5f)*(heat/0.5f)*0.2f;
-			}
+		
 			
 		
 
@@ -41,4 +32,20 @@ public class HeatwaveAnimationBehavior : MonoBehaviour {
 
 		
 	}
+
+    public void AnimateHeatWave(float heat)
+    {
+        
+        if (heat < 0.5)
+        {
+            transform.localScale = Vector3.Lerp(MinScale, MaxScale, heat*2);
+            anim.speed = 0.2f;
+        }
+        else
+        {
+            transform.localScale = MaxScale;
+            //animate it moving faster
+            anim.speed = (heat / 0.5f) * (heat / 0.5f) * (heat / 0.5f) * 0.2f;
+        }
+    }
 }
