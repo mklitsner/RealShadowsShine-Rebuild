@@ -7,21 +7,29 @@ public class FlowerAudio : MonoBehaviour {
     int soundIndex;
 	bool clipPlayed;
     AudioManager audioManager;
-    [SerializeField] BlendFlower _blendFlower;
+    [SerializeField] AudioClip customSound;
+    //[SerializeField] BlendFlower _blendFlower;
 
     void Start () {
         audioManager = Manager.AudioManager;
-        soundIndex = audioManager.GetRandomFlowerSound();
-		clipPlayed = false;
+        soundIndex = audioManager.GetRandomBloomSound();
 	}
 	
-	// Update is called once per frame
-	void Update () {
 
-		if (_blendFlower.playSound && !clipPlayed) {
-            audioManager.PlayFlowerSound(soundIndex);
-            //Debug.Log (this.gameObject.name + "played sound");
-            clipPlayed = true;
-		}
-	}
+
+    public void PlayBloomSound()
+    {
+        if (!clipPlayed)
+        {
+            if (customSound != null)
+            {
+                audioManager.PlayBloomSound(customSound);
+            }
+            else
+            {
+                audioManager.PlayBloomSound(soundIndex);
+            }
+         clipPlayed = true;
+        }
+    }
 }

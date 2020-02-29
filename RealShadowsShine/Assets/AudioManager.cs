@@ -51,16 +51,24 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public int GetRandomFlowerSound()
+    public int GetRandomBloomSound()
     {
         return Random.Range(0, flowerAudioClips.Length);
     }
 
-    public void PlayFlowerSound(int index)
+    public void PlayBloomSound(int index)
     {
         AudioSource audioSource =
         NextFreeAudioSource();
-        audioSource.clip = flowerAudioClips[index];
+        audioSource.PlayOneShot(flowerAudioClips[index]);
     }
+
+    public void PlayBloomSound(AudioClip customClip)
+    {
+        AudioSource audioSource =
+        NextFreeAudioSource();
+        audioSource.PlayOneShot(customClip);
+    }
+
 
 }

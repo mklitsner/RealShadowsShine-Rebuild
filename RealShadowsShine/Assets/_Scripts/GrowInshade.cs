@@ -20,7 +20,7 @@ public class GrowInshade : MonoBehaviour {
 	//set to above one if you want a stay 
 	public float scaleIndex = 0.0f;
 	public bool maxScaleIsStart;
-	public bool inshade;
+	public bool growSound;
 
 	void Start(){
 		if(maxScaleIsStart){
@@ -33,15 +33,17 @@ public class GrowInshade : MonoBehaviour {
 
 	void Update(){
 
+		growSound = false;
 		float rate_1 = (1.0f / duration) * growSpeed;
 		float rate_2 = (1.0f / duration) * shrinkSpeed;
 
 		if (_detectShade.inshade) {
 			if (scaleIndex < 1.0f) {
 				scaleIndex += Time.deltaTime * rate_1;
-            }
-
-        } else {
+				growSound = true;
+			}
+		} else {
+			
 			if (scaleIndex > 0.0f&& !stay) {
 				scaleIndex -= Time.deltaTime * rate_2;
 			}

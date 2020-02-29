@@ -6,16 +6,27 @@ public class heatWaveObjectBehavior : MonoBehaviour {
 
     public bool fixWorldSize;
     public float worldSize = 1;
+    [SerializeField] Vector3 fixedRotation;
+    [SerializeField] bool FixRotationOn;
     [SerializeField] HeatwaveAnimationBehavior[] heatwaveAnimations;
-	// Use this for initialization
-	void Start () {
+   
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		transform.rotation = Quaternion.Euler (0, 0, 0);
+        if (FixRotationOn)
+        transform.rotation = Quaternion.Euler(fixedRotation.x, fixedRotation.y, fixedRotation.z);
+
+        
+
+
+
+        
 
         Transform parent = transform.parent;
 

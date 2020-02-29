@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Activate_with_Tree : MonoBehaviour {
-	public GameObject Tree;
+	public GrowInshade Tree;
 
 	//the growth level of tree
 	public float limmit;
@@ -17,7 +17,7 @@ public class Activate_with_Tree : MonoBehaviour {
 	void Update () {
 		if (Tree == null) {
 		} else {
-			float i = Tree.transform.GetComponent<GrowInshade> ().scaleIndex;
+			float i = Tree.scaleIndex;
 			if (i > limmit) {
 				activate = true;
 			}

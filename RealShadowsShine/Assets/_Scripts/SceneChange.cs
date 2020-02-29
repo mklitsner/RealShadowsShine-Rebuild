@@ -29,7 +29,7 @@ public class SceneChange : MonoBehaviour {
 
 		if (transition == false) {
 			if (changeScene) {
-				SceneManager.LoadScene (NextSceneName, LoadSceneMode.Single);
+                SceneManager.LoadScene (NextSceneName, LoadSceneMode.Single);
 			}
 		} else {
 			if (changeScene) {

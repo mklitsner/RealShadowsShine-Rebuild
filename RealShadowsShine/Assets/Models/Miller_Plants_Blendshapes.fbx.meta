@@ -20,7 +20,17 @@ ModelImporter:
     3300002: stem
     4300000: roots
     4300002: stem
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stalk_vines_case_pollen_mat
+    second: {fileID: 2100000, guid: 1af7e2c9a12a94f9d861e0df6d08a84a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stalk_vines_case_pollen_mat.1
+    second: {fileID: 2100000, guid: 7f76c7b6c462d4e2e9b3a65f61ca7571, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

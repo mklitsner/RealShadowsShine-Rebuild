@@ -5,41 +5,30 @@ using UnityEngine.Audio;
 
 public class Grow_audio : MonoBehaviour {
 	AudioSource audiosource;
-	//public AudioClip[] audioClips;
-	// Use this for initialization
 	float StartPitch;
 	void Start () {
 		audiosource = GetComponent<AudioSource> ();
 		//audiosource.clip = audioClips[Random.Range(0, audioClips.Length)];
-		//audiosource.Play ();
-		//audiosource.Pause ();
-		audiosource.enabled = false;
+		audiosource.mute = true;
+		audiosource.Play ();
+		
 		StartPitch = audiosource.pitch;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		bool inshade = GetComponent<GrowInshade> ().inshade;
-		float i = GetComponent<GrowInshade> ().scaleIndex;
-		if (inshade && i < 1) {
+		bool growSound = GetComponent<GrowInshade> ().growSound;
+		float height = GetComponent<GrowInshade> ().scaleIndex;
+		if (growSound) {
 			audiosource.enabled = true;
-			audiosource.UnPause ();
 
-			//play audio
-			//pitch is mapped to i
+			audiosource.mute = false;
 
 		} else {
-			audiosource.Pause ();
-
-		}
-			
-		if (inshade) {
-			audiosource.enabled = true;
-		}
-
-		if (i >= 1) {
+			audiosource.mute = true;
 			audiosource.enabled = false;
 		}
-		audiosource.pitch= Mathf.Lerp (StartPitch, StartPitch+0.5f*StartPitch, i);
+
+		audiosource.pitch= Mathf.Lerp (StartPitch, StartPitch+0.5f*StartPitch, height);
 	}
 }

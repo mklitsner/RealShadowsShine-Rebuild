@@ -7,6 +7,7 @@ public class BlendFlower : MonoBehaviour {
     [SerializeField] DetectShade _detectShade;
     [SerializeField] heatWaveObjectBehavior heatWaveObject;
     [SerializeField] Transform riseTransform;
+    [SerializeField] FlowerAudio flowerAudio;
 
     public float heat;
     float heatSpeed = 0.01f;
@@ -45,6 +46,7 @@ public class BlendFlower : MonoBehaviour {
     public List<int> newBlends;
     List<float> blendMax;
     private string debugString;
+    private float blendTime;
 
     // Use this for initialization
     void Start () {
@@ -95,10 +97,7 @@ public class BlendFlower : MonoBehaviour {
 
 
 
-        if (_skinnedMeshRenderer.GetBlendShapeWeight(blendShapeSelected) > Sound_delay) {
-			playSound = true;
-			Debug.Log ("played sound");
-		}
+        
     }
 
 
@@ -126,12 +125,19 @@ public class BlendFlower : MonoBehaviour {
         if (budState.Equals(BudState.Closed))
         {
             StartCoroutine(Bloom(time));
-            Debug.Log(debugString, this);
+
+            StartCoroutine(WaitToPlaySound(Sound_delay));
+            
+            //            Debug.Log(debugString, this);
         }
 
     }
 
-
+    private IEnumerator WaitToPlaySound(float sound_delay)
+    {
+        yield return new WaitForSeconds(sound_delay);
+            flowerAudio.PlayBloomSound();
+    }
 
     IEnumerator Bloom(float bTime)
 	{
@@ -140,7 +146,8 @@ public class BlendFlower : MonoBehaviour {
             if (riseTransform != null)
                 riseTransform.Translate(0, rise * transform.localScale.x / bTime * Time.deltaTime, 0);
 
-            BlendPetals( t);
+            BlendPetals(t);
+            blendTime = t;
 
             yield return budState = BudState.Blooming;
         }
