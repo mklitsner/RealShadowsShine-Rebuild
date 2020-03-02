@@ -7,6 +7,8 @@ public class Pathfollowshadows : MonoBehaviour {
 
 	public EditorPathScript PathToFollow;
     [SerializeField] Animator animator;
+    [SerializeField] Worm_Audio audio;
+    [SerializeField] float animationSpeed;
 	public bool StartAtCurrentWaypoint;
 	public int CurrentWayPointID = 0;
 	private float reachDistance = 1.0f;
@@ -40,16 +42,21 @@ public class Pathfollowshadows : MonoBehaviour {
     private float wait = 1;
 
     void Start () {
-		
-		if (StartAtCurrentWaypoint) {
+        
+
+        if (StartAtCurrentWaypoint) {
 			transform.position = PathToFollow.path_objs [CurrentWayPointID].position;
 			transform.rotation=Quaternion.LookRotation (PathToFollow.path_objs [CurrentWayPointID+1].position - transform.position);
 		}
+        
+        animator.speed = animationSpeed;
 
 		if (GetComponent<Activate_with_Tree> ().activate==false) {
 			state = ShadeWaitState.Dormant;
-		}
-
+            StopAnimation = true;
+            audio.PlayAudio(false);
+        }
+        
         activate_with_Tree = GetComponent<Activate_with_Tree>();
         detectShade = GetComponentInChildren<DetectShade>();
     }
@@ -70,16 +77,15 @@ public class Pathfollowshadows : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
                 CheckForNextTargetOnPath(distance);
-              
+                audio.PlayAudio(CurrentWayPointID != 0);
+
+
                 if (inshade)
                 {
                     StopAnimation = true;
+                    audio.PlayAudio(false);
                     state = ShadeWaitState.WaitingToLoseShade;
-                    
                 }
-
-                
-
                 break;
             case ShadeWaitState.WaitingToLoseShade:
                 if (!inshade)
@@ -150,6 +156,8 @@ public class Pathfollowshadows : MonoBehaviour {
             animator.SetBool("stop",value);
         }
     }
+
+
 
 
 }

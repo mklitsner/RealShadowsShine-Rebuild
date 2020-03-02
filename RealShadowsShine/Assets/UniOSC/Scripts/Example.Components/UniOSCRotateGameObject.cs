@@ -88,6 +88,8 @@ namespace UniOSC{
 			ry = Quaternion.AngleAxis (cy , Vector3.up);
 			rz = Quaternion.AngleAxis (cz,  Vector3.forward);
 
+			Debug.Log("msg angle "+cy);
+
 			transformToRotate.localRotation = rootRot * rx*ry*rz;
 
 		}

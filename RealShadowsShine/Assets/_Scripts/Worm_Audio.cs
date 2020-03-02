@@ -6,23 +6,40 @@ using UnityEngine;
 public class Worm_Audio : MonoBehaviour {
 
 
-	AudioSource audiosource;
+	[SerializeField] AudioSource audiosource;
 	// Use this for initialization
-	void Start () {
-		audiosource = GetComponent<AudioSource> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	bool on;
 
-
-		if (GetComponent<Pathfollowshadows>().shouldMove && GetComponent<Pathfollowshadows>().CurrentWayPointID!=0 ) {
-			if (!audiosource.isPlaying) {
+	public void PlayAudio(bool play)
+    {
+		if (play)
+		{
+			if (!audiosource.isPlaying)
+			{
+				audiosource.mute = false;
 				audiosource.UnPause();
+				on = true;
 			}
-		} else {
-			audiosource.Pause();
+			
 		}
+		else
+		{
+			audiosource.mute = true;
+			audiosource.Pause();
+			on = false;
+
+		}
+
 	}
+
+
+    private void OnDrawGizmos()
+    {
+        if (audiosource.isPlaying)
+        {
+			Gizmos.color = Color.red;
+			Gizmos.DrawSphere(transform.position, 1f);
+        }
+
+    }
 }

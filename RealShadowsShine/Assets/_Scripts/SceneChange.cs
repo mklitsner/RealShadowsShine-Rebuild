@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour {
 	GameObject wanderer;
+	[SerializeField] PlayGame playGame;
 	public string NextSceneName;
 	public bool transition =false;
 	public bool startTransition = false;
@@ -22,7 +23,7 @@ public class SceneChange : MonoBehaviour {
 		bool changeScene;
 
 		if (StartGame) {
-			changeScene = wanderer.transform.GetComponent<PlayGame> ().initiate;
+			changeScene = playGame.initiate;
 		} else {
 			changeScene = wanderer.transform.GetComponent<WandererPathFollow> ().EndOfPath;
 		}

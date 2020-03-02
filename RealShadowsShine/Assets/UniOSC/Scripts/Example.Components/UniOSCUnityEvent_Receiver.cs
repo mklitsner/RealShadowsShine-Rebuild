@@ -64,7 +64,7 @@ namespace UniOSC
             {
                 Debug.Log(msg.Data[i]);
             }
-            Debug.Log("---------");
+                Debug.Log("---------");
             }
 
         }
