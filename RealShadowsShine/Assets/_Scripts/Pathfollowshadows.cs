@@ -40,9 +40,11 @@ public class Pathfollowshadows : MonoBehaviour {
 
 	public bool shouldMove;
     private float wait = 1;
+    private CameraVisibilityChecker visibilityChecker;
 
     void Start () {
-        
+
+        visibilityChecker = GetComponent<CameraVisibilityChecker>();
 
         if (StartAtCurrentWaypoint) {
 			transform.position = PathToFollow.path_objs [CurrentWayPointID].position;
@@ -77,7 +79,7 @@ public class Pathfollowshadows : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
                 CheckForNextTargetOnPath(distance);
-                audio.PlayAudio(CurrentWayPointID != 0);
+                audio.PlayAudio(CurrentWayPointID != 0&& visibilityChecker.isVisibleToMainCamera);
 
 
                 if (inshade)

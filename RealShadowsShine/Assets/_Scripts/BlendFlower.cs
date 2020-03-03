@@ -8,6 +8,8 @@ public class BlendFlower : MonoBehaviour {
     [SerializeField] heatWaveObjectBehavior heatWaveObject;
     [SerializeField] Transform riseTransform;
     [SerializeField] FlowerAudio flowerAudio;
+    [SerializeField] MeshCollider[] meshCollider;
+    [SerializeField] Color[] petalColors;
 
     public float heat;
     float heatSpeed = 0.01f;
@@ -35,28 +37,38 @@ public class BlendFlower : MonoBehaviour {
     
 
 
-	bool blooming;
+
 	[HideInInspector]
 	public bool playSound;
 	public bool bloomed;
 	public float rise;
 	public float time;
-	float blend;
+
 	public float Sound_delay=50;
     public List<int> newBlends;
     List<float> blendMax;
-    private string debugString;
     private float blendTime;
+    private string debugString;
+
 
     // Use this for initialization
     void Start () {
+
+        if(petalColors.Length>0)
+        _skinnedMeshRenderer.material.color =
+            petalColors[Random.Range(0, petalColors.Length)];
+
+        foreach (MeshCollider col in meshCollider)
+        {
+            col.enabled = false;
+        }
        heat = 0;
         skinnedMesh = _skinnedMeshRenderer.sharedMesh;
 		blendShapeCount = skinnedMesh.blendShapeCount;
         if(riseTransform!=null)
         riseTransform.Translate (0, -rise * transform.localScale.x, 0);
 
-        if (Random.Range(0, 3) == 3)
+        if (Random.Range(0, 3) == 2)
         {
             petalType = Random.Range(0, 3);
         }
@@ -127,8 +139,9 @@ public class BlendFlower : MonoBehaviour {
             StartCoroutine(Bloom(time));
 
             StartCoroutine(WaitToPlaySound(Sound_delay));
+
             
-            //            Debug.Log(debugString, this);
+                     // Debug.Log(debugString, this);
         }
 
     }
@@ -151,6 +164,10 @@ public class BlendFlower : MonoBehaviour {
 
             yield return budState = BudState.Blooming;
         }
+        foreach (MeshCollider col in meshCollider)
+        {
+            col.enabled = true;
+        }
         yield return budState= BudState.Bloomed;
 
 
@@ -169,19 +186,19 @@ public class BlendFlower : MonoBehaviour {
         {
             case 0:
                 blends = new List<int>() { 0, 1, 2, 3};
-                blendCount = Random.Range(0, 3);
+                blendCount = Random.Range(1, 3);
                 min = 30;
                 max = 100;
                 break;
             case 1:
                 blends = new List<int>() { 5, 6};
-                blendCount = 0;
+                blendCount = 1;
                 min = 20;
-                max = 60;
+                max = 80;
                 break;
             case 2:
                 blends = new List<int>() { 0, 1, 2, 3, 5, 6 };
-                blendCount = Random.Range(0, 3);
+                blendCount = Random.Range(1, 3);
                 min = 30;
                 max = 100;
                 break;
@@ -191,7 +208,11 @@ public class BlendFlower : MonoBehaviour {
 
       
 
-        int length = blends.Count+1; 
+        int length = blends.Count+1;
+        if (blends.Count == 0)
+        {
+            Debug.Log("AHH!");
+        }
         newBlends = blends;
         //random remove
         for (int i = 0; i < length - blendCount; i++)
@@ -221,7 +242,7 @@ public class BlendFlower : MonoBehaviour {
         }
        
 
-        debugString = string.Format("min {0} max {1} count {4}(removed {2} of {3})", min, max, length - blendCount, length, newBlends.Count);
+        debugString = string.Format("min {0} max {1} count {4}(removed {2} of {3})", min, max, length - blendCount, length,     newBlends.Count);
     }
 
     private void BlendPetals( float t)
