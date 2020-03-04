@@ -128,7 +128,7 @@ public class BlendFlower : MonoBehaviour {
                 heat += heatSpeed;
           
         }
-        if(heatWaveObject!=null)
+        if(heatWaveObject!=null&& heatWaveObject.gameObject.activeInHierarchy)
         heatWaveObject.AnimateHeatWave(heat);
     }
 

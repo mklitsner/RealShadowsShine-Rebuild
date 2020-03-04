@@ -7,13 +7,18 @@ public class FlowerAudio : MonoBehaviour {
     int soundIndex;
 	bool clipPlayed;
     AudioManager audioManager;
-    [SerializeField] AudioClip customSound;
-    //[SerializeField] BlendFlower _blendFlower;
+    [SerializeField] AudioClip[] customSounds;
+    AudioClip customSound;
 
     void Start () {
         audioManager = Manager.AudioManager;
         soundIndex = audioManager.GetRandomBloomSound();
-	}
+
+        if (customSounds.Length > 0)
+        {
+            customSound = customSounds[Random.Range(0, customSounds.Length)];
+        }
+    }
 	
 
 
@@ -21,7 +26,7 @@ public class FlowerAudio : MonoBehaviour {
     {
         if (!clipPlayed)
         {
-            if (customSound != null)
+            if (customSound!=null)
             {
                 audioManager.PlayBloomSound(customSound);
             }

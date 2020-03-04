@@ -7,7 +7,8 @@ using UnityEditor;
 public class Flower : MonoBehaviour
 {
     [SerializeField] bool FreezeScale;
-
+    [SerializeField] bool Secondary;
+    [SerializeField] GameObject heatIndicator;
     void Awake()
     {
         if (Application.isPlaying)
@@ -36,11 +37,23 @@ public class Flower : MonoBehaviour
         {
             // Save current position if enabled
             if (FreezeScale != m_OldFreezeScale)
-                m_Scale =  transform.localScale;
+                m_Scale = transform.localScale;
             // Freeze the position
-                transform.localScale = m_Scale;
+            transform.localScale = m_Scale;
         }
 
         m_OldFreezeScale = FreezeScale;
+
+        if (Secondary)
+        {
+            heatIndicator.SetActive(false);
+        }
+        else
+        {
+            heatIndicator.SetActive(true);
+        }
     }
+
+   
+
 }
