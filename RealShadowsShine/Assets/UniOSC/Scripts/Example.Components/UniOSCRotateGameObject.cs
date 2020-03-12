@@ -38,10 +38,11 @@ namespace UniOSC{
 		private Quaternion rootRot;
 		private float cx,cy,cz;
 		private Quaternion rx,ry,rz;
-		#endregion
+        [SerializeField] bool debug;
+        #endregion
 
 
-		void Awake(){
+        void Awake(){
 
 		}
 
@@ -88,6 +89,7 @@ namespace UniOSC{
 			ry = Quaternion.AngleAxis (cy , Vector3.up);
 			rz = Quaternion.AngleAxis (cz,  Vector3.forward);
 
+            if(debug)
 			Debug.Log("msg angle "+cy);
 
 			transformToRotate.localRotation = rootRot * rx*ry*rz;

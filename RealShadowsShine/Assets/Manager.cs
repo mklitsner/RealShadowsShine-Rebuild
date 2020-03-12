@@ -10,8 +10,12 @@ public class Manager : MonoBehaviour
     public static Manager instance;
 
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private Canvas _mainCanvas;
+    [SerializeField] private SceneChange _sceneChange;
 
     public static AudioManager AudioManager;
+    public static Canvas MainCanvas;
+    public static SceneChange SceneChange;
 
 
     void Awake()
@@ -31,5 +35,7 @@ public class Manager : MonoBehaviour
     private void Initialize()
     {
         AudioManager = instance._audioManager;
+        MainCanvas = instance._mainCanvas;
+        SceneChange = instance._sceneChange;
     }
 }

@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour {
-	GameObject wanderer;
+	WandererPathFollow wanderer;
 	[SerializeField] PlayGame playGame;
 	public string NextSceneName;
 	public bool transition =false;
 	public bool startTransition = false;
-	GameObject Fader;
+	public Fade Fader;
 	public bool StartGame;
+	bool isGoBackToMenu;
 	// Use this for initialization
 	void Start () {
-		wanderer= GameObject.Find ("wanderer");
-		Fader= GameObject.Find ("Fader");
+        if((WandererPathFollow)FindObjectOfType(typeof(WandererPathFollow))!=null)
+		wanderer = (WandererPathFollow)FindObjectOfType(typeof(WandererPathFollow));
+
+        Fader = (Fade)FindObjectOfType(typeof(Fade));
+		isGoBackToMenu = false;
 	}
 	
 	// Update is called once per frame
@@ -22,24 +26,54 @@ public class SceneChange : MonoBehaviour {
 
 		bool changeScene;
 
+
 		if (StartGame) {
 			changeScene = playGame.initiate;
 		} else {
-			changeScene = wanderer.transform.GetComponent<WandererPathFollow> ().EndOfPath;
+            if (isGoBackToMenu)
+            {
+				changeScene = true;
+
+			}
+            else
+            {
+				changeScene = wanderer.EndOfPath;
+			}
 		}
 
 		if (transition == false) {
-			if (changeScene) {
-                SceneManager.LoadScene (NextSceneName, LoadSceneMode.Single);
-			}
-		} else {
+			if (changeScene)
+            {
+                ChangeScene();
+            }
+        } else {
 			if (changeScene) {
 				startTransition = true;
-				if (Fader.GetComponent<Fade> ().fadeOver) {
-					SceneManager.LoadScene (NextSceneName, LoadSceneMode.Single);
+				if (Fader.fadeOver) {
+					ChangeScene();
 				}
 			}
 
+		}
+	}
+
+    private void ChangeScene()
+    {
+        if (isGoBackToMenu)
+        {
+            SceneManager.LoadScene("0_Menu", LoadSceneMode.Single);
+        }
+        else
+        {
+            SceneManager.LoadScene(NextSceneName, LoadSceneMode.Single);
+        }
+    }
+
+    public void GoBackToMenu()
+	{
+		if (!SceneManager.GetActiveScene().name.Equals("0_Menu"))
+		{
+			isGoBackToMenu = true;
 		}
 	}
 }

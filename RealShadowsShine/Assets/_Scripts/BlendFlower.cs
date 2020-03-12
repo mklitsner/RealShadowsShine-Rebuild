@@ -41,11 +41,13 @@ public class BlendFlower : MonoBehaviour {
 	[HideInInspector]
 	public bool playSound;
 	public bool bloomed;
-	public float rise;
+	public float riseHeight;
+    public float startHeight;
 	public float time;
 
 	public float Sound_delay=50;
     public List<int> newBlends;
+    private bool triggerDebug;
     List<float> blendMax;
     private float blendTime;
     private string debugString;
@@ -66,7 +68,7 @@ public class BlendFlower : MonoBehaviour {
         skinnedMesh = _skinnedMeshRenderer.sharedMesh;
 		blendShapeCount = skinnedMesh.blendShapeCount;
         if(riseTransform!=null)
-        riseTransform.Translate (0, -rise * transform.localScale.x, 0);
+        riseTransform.Translate (0, startHeight * transform.localScale.x, 0);
 
         if (Random.Range(0, 3) == 2)
         {
@@ -140,8 +142,8 @@ public class BlendFlower : MonoBehaviour {
 
             StartCoroutine(WaitToPlaySound(Sound_delay));
 
-            
-                     // Debug.Log(debugString, this);
+            if(triggerDebug)
+                     Debug.Log(debugString, this);
         }
 
     }
@@ -157,7 +159,7 @@ public class BlendFlower : MonoBehaviour {
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / bTime)
         {
             if (riseTransform != null)
-                riseTransform.Translate(0, rise * transform.localScale.x / bTime * Time.deltaTime, 0);
+                riseTransform.Translate(0, riseHeight * transform.localScale.x / bTime * Time.deltaTime, 0);
 
             BlendPetals(t);
             blendTime = t;
@@ -168,6 +170,7 @@ public class BlendFlower : MonoBehaviour {
         {
             col.enabled = true;
         }
+        
         yield return budState= BudState.Bloomed;
 
 
@@ -176,29 +179,29 @@ public class BlendFlower : MonoBehaviour {
 
     void SetPetals()
     {
-        List<int> blends = new List<int>();
+        List<int> blends = new List<int>(0);
         blendMax = new List<float>();
-        float min=0;
+        float min=20;
         float max=100;
-        int blendCount = 0;
+        int blendSubtract = 1;
 
         switch (petalType)
         {
             case 0:
                 blends = new List<int>() { 0, 1, 2, 3};
-                blendCount = Random.Range(1, 3);
+                blendSubtract = Random.Range(1, 3);
                 min = 30;
                 max = 100;
                 break;
             case 1:
                 blends = new List<int>() { 5, 6};
-                blendCount = 1;
+                blendSubtract = 1;
                 min = 20;
                 max = 80;
                 break;
             case 2:
                 blends = new List<int>() { 0, 1, 2, 3, 5, 6 };
-                blendCount = Random.Range(1, 3);
+                blendSubtract = Random.Range(1, 3);
                 min = 30;
                 max = 100;
                 break;
@@ -208,46 +211,50 @@ public class BlendFlower : MonoBehaviour {
 
       
 
-        int length = blends.Count+1;
-        if (blends.Count == 0)
-        {
-            Debug.Log("AHH!");
-        }
+        
         newBlends = blends;
         //random remove
-        for (int i = 0; i < length - blendCount; i++)
-        {
-            int Rblend = Random.Range(0, newBlends.Count);
+        
 
-            newBlends.Remove(Rblend);
-        }
+            for (int i = 0; i < blends.Count-blendSubtract; i++)
+            {
+                int Rblend = Random.Range(0, newBlends.Count);
+
+                newBlends.Remove(Rblend);
+            }
+        
 
         if (newBlends.Count == 2)
         {
             min = 20;
-            max = 50;
+            max = 70;
         }
         else if (newBlends.Count >= 3)
         {
             min = 5;
-            max = 15;
+            max = 30;
         }
 
-
+        if (newBlends.Count < 1)
+        {
+            Debug.Log("AHHH",this);
+            newBlends = new List<int>(Random.Range(0, 3));
+            triggerDebug = true;
+        }
 
         foreach (var Nblend in newBlends)
         {
             blendMax.Add(Random.Range(min, max));
             _skinnedMeshRenderer.SetBlendShapeWeight(Nblend, 0);
         }
-       
 
-        debugString = string.Format("min {0} max {1} count {4}(removed {2} of {3})", min, max, length - blendCount, length,     newBlends.Count);
+
+        debugString = string.Format("min {0} max {1} count {2})", min, max, newBlends.Count);
     }
 
     private void BlendPetals( float t)
     {
-
+        
         for (int i = 0; i < newBlends.Count; i++)
         {
             _skinnedMeshRenderer.SetBlendShapeWeight(newBlends[i], Mathf.Lerp(0, blendMax[i], t));

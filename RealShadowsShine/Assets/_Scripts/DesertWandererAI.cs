@@ -27,6 +27,7 @@ public class DesertWandererAI: MonoBehaviour {
     [SerializeField] DetectShade detectShade;
     [SerializeField] Wanderer_Audio audioControl;
     [SerializeField] HeatwaveAnimationBehavior heatwave;
+    [SerializeField] float footprintheight= 0.5f;
 
     //path follow
 
@@ -191,7 +192,7 @@ public class DesertWandererAI: MonoBehaviour {
 		while (true) {
 			
 			footprintSide = -1 * footprintSide;
-			Vector3 footprintposition = new Vector3 (transform.localPosition.x + 0.05f * footprintSide, transform.localPosition.y - 0.5f, transform.localPosition.z);
+			Vector3 footprintposition = new Vector3 (transform.localPosition.x + 0.05f * footprintSide, transform.localPosition.y - footprintheight, transform.localPosition.z);
 			GameObject footprintclone = Instantiate (footprint, footprintposition, Quaternion.Euler (180 + footprintSide * 90, transform.localEulerAngles.y, 90 + 90 * footprintSide),footprintHolder.transform);
 			footprintclone.GetComponent<FootprintScript> ().footprintSide = footprintSide;
 

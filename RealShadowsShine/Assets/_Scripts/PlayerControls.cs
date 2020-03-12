@@ -36,9 +36,6 @@ public float sensitivity = 1f;
 		sunXrotation=transform.localEulerAngles.x;
 		sunYrotation=transform.eulerAngles.y;
 
-
-
-
 		ChangeSunCoordinatesTwoButton();
 		ChangeSunPitch ();
 		MoveSun ();

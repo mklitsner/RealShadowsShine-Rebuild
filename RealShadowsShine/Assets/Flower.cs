@@ -9,10 +9,34 @@ public class Flower : MonoBehaviour
     [SerializeField] bool FreezeScale;
     [SerializeField] bool Secondary;
     [SerializeField] GameObject heatIndicator;
+    [SerializeField] HeatwaveUI hui;
+    [SerializeField] DetectShade detectShade;
+    [SerializeField] bool activateImmediately;
     void Awake()
     {
         if (Application.isPlaying)
+        {
+
+            
+                detectShade.inshade = activateImmediately;
+                detectShade.inshadeOverride = activateImmediately;
+            
+
+            if (Secondary)
+            {
+                heatIndicator.SetActive(false);
+                hui.isSecondary = true;
+            }
+            else
+            {
+                heatIndicator.SetActive(true);
+                hui.isSecondary = false;
+            }
             Destroy(this);
+        }
+      
+
+
     }
     bool runOnce;
     private bool m_OldFreezeScale;
@@ -47,11 +71,14 @@ public class Flower : MonoBehaviour
         if (Secondary)
         {
             heatIndicator.SetActive(false);
+            hui.isSecondary = true;
         }
         else
         {
             heatIndicator.SetActive(true);
+            hui.isSecondary = false;
         }
+
     }
 
    

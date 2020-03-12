@@ -13,15 +13,10 @@ public class heatWaveObjectBehavior : MonoBehaviour {
     [SerializeField] Transform rotator;
    
 
-    // Use this for initialization
-    void Start () {
-		
-	}
+
 	
 	// Update is called once per frame
 	void Update () {
-
-        
 
         Transform parent = transform.parent;
 

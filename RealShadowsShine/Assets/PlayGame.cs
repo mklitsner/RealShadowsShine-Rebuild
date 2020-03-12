@@ -7,15 +7,15 @@ public class PlayGame : MonoBehaviour {
 	public bool initiate;
 	[SerializeField] Text[] letters;
 	[SerializeField] Animator animator;
-	float counter;
-	float limit;
+	[SerializeField] DetectShade detectShade;
     private Color[] lettersColor;
     public float timeLeftinCycle;
+	[SerializeField]BlendFlower blendFlower;
+    
 
     // Use this for initialization
     void Start () {
-		counter = 0;
-		limit = 2;
+
 		lettersColor = new Color[letters.Length];
         for (int i = 0; i < letters.Length; i++)
         {
@@ -25,25 +25,18 @@ public class PlayGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		bool inshade = GetComponent<DetectShade> ().inshade;
-
-		if (inshade)
+		
+		if (detectShade.inshade)
         {
-            //AnimateLetters(3,0f);
-
            ActivateAnimation(true);
 
-            counter += Time.deltaTime;
-            if (counter > 2)
+            if (blendFlower.budState.Equals(BlendFlower.BudState.Bloomed))
             {
                 initiate = true;
             }
-
-
-
         }
         else {
-			counter = 0;
+			
 			ActivateAnimation(false);
 		}
 		

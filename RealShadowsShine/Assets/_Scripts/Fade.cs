@@ -9,10 +9,12 @@ public class Fade : MonoBehaviour {
 	public bool fadedIn=false;
 	public bool fadeOver=false;
 	public float fadeDuration=5;
+	Color imageColor;
 	// Use this for initialization
 	void Start () {
-		gameManager=GameObject.Find ("GameManager");
+		gameManager = Manager.instance.gameObject;
 		alphaFadeValue=1;
+		imageColor = GetComponent<Image>().color;
 	}
 	
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class Fade : MonoBehaviour {
 				alphaFadeValue += Mathf.Clamp01 (Time.deltaTime / fadeDuration);
 
 
-				GetComponent<Image>().color = new Color (0, 0, 0, alphaFadeValue);
+				GetComponent<Image>().color = new Color (imageColor.r, imageColor.g, imageColor.b, alphaFadeValue);
 
 				if (alphaFadeValue >= 1) {
 					fadeOver = true;
@@ -32,7 +34,7 @@ public class Fade : MonoBehaviour {
 			alphaFadeValue -= Mathf.Clamp01(Time.deltaTime / 5);
 
 
-			GetComponent<Image>().color = new Color(0, 0, 0, alphaFadeValue);
+			GetComponent<Image>().color = new Color(imageColor.r, imageColor.g, imageColor.b, alphaFadeValue);
 			if (alphaFadeValue <= 0) {
 				fadedIn = true;
 			}
