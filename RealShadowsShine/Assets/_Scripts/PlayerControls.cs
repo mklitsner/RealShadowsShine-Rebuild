@@ -33,16 +33,14 @@ public float sensitivity = 1f;
 	
 	// Update is called once per frame
 	void Update () {
-		sunXrotation=transform.localEulerAngles.x;
 		sunYrotation=transform.eulerAngles.y;
 
 		ChangeSunCoordinatesTwoButton();
-		ChangeSunPitch ();
+		
 		MoveSun ();
 	}
 
 	void MoveSun(){
-		transform.Rotate (sunXrotate, 0, 0,Space.Self);
 		transform.Rotate (0, sunYrotate, 0,Space.World);
 
 	}
@@ -59,12 +57,12 @@ public float sensitivity = 1f;
 			sunYrotate = -sensitivity;
 		}else{
 			if(sunYrotate>0){
-				sunYrotate = sunYrotate-deacceleration;
+				sunYrotate -= deacceleration;
 				if (sunYrotate <= 0) {
 					sunYrotate = 0;
 				}
 			}else if (sunYrotate<0){
-				sunYrotate = sunYrotate+deacceleration;
+				sunYrotate += deacceleration;
 				if (sunYrotate >= 0) {
 					sunYrotate = 0;
 				}
@@ -73,73 +71,79 @@ public float sensitivity = 1f;
 	}
 
 
-	void ChangeSunCoordinatesNatural(){
-		if (sunXrotation > 90) {
-			sign = -1;
-		} else {
-			sign = 1;
-		}
+    //void ChangeSunCoordinatesNatural(){
+    //	if (sunXrotation > 90) {
+    //		sign = -1;
+    //	} else {
+    //		sign = 1;
+    //	}
 
 
-		if (Input.GetKey("up")) {
+    //	if (Input.GetKey("up")) {
 
-			sunYrotate = -sensitivity * Mathf.Sin ((sunYrotation* Mathf.PI)/180)*sign;
-		} else if (Input.GetKey ("down")) {
+    //		sunYrotate = -sensitivity * Mathf.Sin ((sunYrotation* Mathf.PI)/180)*sign;
+    //	} else if (Input.GetKey ("down")) {
 
-			sunYrotate = sensitivity * Mathf.Sin ((sunYrotation* Mathf.PI)/180)*sign;
-		} else if (Input.GetKey("left")) {
+    //		sunYrotate = sensitivity * Mathf.Sin ((sunYrotation* Mathf.PI)/180)*sign;
+    //	} else if (Input.GetKey("left")) {
 
-			sunYrotate = -sensitivity * Mathf.Cos ((sunYrotation* Mathf.PI)/180)*sign;
-		} else if (Input.GetKey ("right")) {
-			
-			sunYrotate = sensitivity * Mathf.Cos ((sunYrotation* Mathf.PI)/180)*sign;
-		} else {
-			if(sunYrotate>0){
-				sunYrotate = sunYrotate-deacceleration;
-				if (sunYrotate <= 0) {
-					sunYrotate = 0;
-				}
-			}else if (sunYrotate<0){
-				sunYrotate = sunYrotate+deacceleration;
-				if (sunYrotate >= 0) {
-					sunYrotate = 0;
-				}
-			}
-		}
-	}
+    //		sunYrotate = -sensitivity * Mathf.Cos ((sunYrotation* Mathf.PI)/180)*sign;
+    //	} else if (Input.GetKey ("right")) {
 
-
-	void ChangeSunPitch(){
-
-		if (Input.GetKey ("q")) {
-
-			if (sunXrotation < maxXrot) {
-				sunXrotate = sensitivity;
-			}
-		} else if (Input.GetKey ("a")) {
-
-			if (sunXrotation > minXrot) {
-				sunXrotate = -sensitivity;
-			}
-		} else {
-			sunXrotate = 0;
-		}
-	}
+    //		sunYrotate = sensitivity * Mathf.Cos ((sunYrotation* Mathf.PI)/180)*sign;
+    //	} else {
+    //		if(sunYrotate>0){
+    //			sunYrotate = sunYrotate-deacceleration;
+    //			if (sunYrotate <= 0) {
+    //				sunYrotate = 0;
+    //			}
+    //		}else if (sunYrotate<0){
+    //			sunYrotate = sunYrotate+deacceleration;
+    //			if (sunYrotate >= 0) {
+    //				sunYrotate = 0;
+    //			}
+    //		}
+    //	}
+    //}
 
 
+    //void ChangeSunPitch(){
 
-	void ChangeSunCoordinates(){
+    //	if (Input.GetKey ("q")) {
 
-		if (Input.GetKey("left")) {
-			
-			sunYrotate = sensitivity;
-		} else if (Input.GetKey ("right")) {
-			
-			sunYrotate = -sensitivity;
-		} else {
-			sunYrotate = 0;
-		}
-	}
+    //		if (sunXrotation < maxXrot) {
+    //			sunXrotate = sensitivity;
+    //		}
+    //	} else if (Input.GetKey ("a")) {
+
+    //		if (sunXrotation > minXrot) {
+    //			sunXrotate = -sensitivity;
+    //		}
+    //	} else {
+    //		sunXrotate = 0;
+    //	}
+    //}
+
+
+
+    void ChangeSunCoordinates()
+    {
+
+        if (Input.GetKey("left"))
+        {
+
+            sunYrotate = sensitivity;
+        }
+        else if (Input.GetKey("right"))
+        {
+
+            sunYrotate = -sensitivity;
+        }
+        else
+        {
+            sunYrotate = 0;
+        }
+    }
 
 
 }
